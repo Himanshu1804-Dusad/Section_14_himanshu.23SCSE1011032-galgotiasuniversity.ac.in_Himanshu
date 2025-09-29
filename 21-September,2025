@@ -1,0 +1,98 @@
+*************************************************************************| Leet Code Question -   31 | ****************************************************************************************
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int n = nums.length, i = n - 2;
+
+        while (i >= 0 && nums[i] >= nums[i + 1]) i--;
+
+        if (i >= 0) {
+            int j = n - 1;
+            while (nums[j] <= nums[i]) j--;
+            swap(nums, i, j);
+        }
+
+        reverse(nums, i + 1, n - 1);
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i]; nums[i] = nums[j]; nums[j] = temp;
+    }
+
+    private void reverse(int[] nums, int i, int j) {
+        while (i < j) swap(nums, i++, j--);
+    }
+}
+
+
+*************************************************************************| Leet Code Question -  73 | *****************************************************************************************
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        boolean firstRowZero = false;
+        boolean firstColZero = false;
+        
+        // Check if first row has zero
+        for (int j = 0; j < matrix[0].length; j++) {
+            if (matrix[0][j] == 0) {
+                firstRowZero = true;
+                break;
+            }
+        }
+        
+        // Check if first column has zero
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][0] == 0) {
+                firstColZero = true;
+                break;
+            }
+        }
+        
+        // Mark zeros on first row and column
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 1; j < matrix[0].length; j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        
+        // Set zeros based on marks
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 1; j < matrix[0].length; j++) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+        // Set first row to zero if needed
+        if (firstRowZero) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                matrix[0][j] = 0;
+            }
+        }
+        
+        // Set first column to zero if needed
+        if (firstColZero) {
+            for (int i = 0; i < matrix.length; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+    }
+}
+
+***************************************************************************| Leet Code Question - 118 | ***********************************************************************************
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> row = new ArrayList<>();
+            for (int j = 0; j <= i; j++) {
+                if (j == 0 || j == i) row.add(1);
+                else row.add(res.get(i - 1).get(j - 1) + res.get(i - 1).get(j));
+            }
+            res.add(row);
+        }
+        return res;
+    }
+}
