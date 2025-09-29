@@ -1,0 +1,30 @@
+*******************************************************************************| Leet Code Question- 560 | ****************************************************************************
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        Map<Integer,Integer> map = new HashMap<>();
+        map.put(0,1);
+        int sum=0, count=0;
+        for(int n: nums){
+            sum += n;
+            count += map.getOrDefault(sum-k,0);
+            map.put(sum, map.getOrDefault(sum,0)+1);
+        }
+        return count;
+    }
+}
+
+*****************************************************************************| Leet   Code Question - 56 | *****************************************************************************
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (a,b) -> a[0] - b[0]);
+        List<int[]> res = new ArrayList<>();
+        for (int[] interval : intervals) {
+            if (res.isEmpty() || res.get(res.size()-1)[1] < interval[0]) {
+                res.add(interval);
+            } else {
+                res.get(res.size()-1)[1] = Math.max(res.get(res.size()-1)[1], interval[1]);
+            }
+        }
+        return res.toArray(new int[res.size()][]);
+    }
+}
